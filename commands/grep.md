@@ -1,7 +1,7 @@
 
 # 🙆‍♂️ import 🙇‍♂️
 
-[리눅스 grep 명령어 사용법. (Linux grep command) - 리눅스 문자열 검색[개발자를 위한 레시피]](https|//recipes4dev.tistory.com/157)
+[리눅스 grep 명령어 사용법. (Linux grep command) - 리눅스 문자열 검색[개발자를 위한 레시피]](https://recipes4dev.tistory.com/157)
 
 []()
 
@@ -54,3 +54,344 @@
 |-l        | 패턴이 존재하는 파일 이름만 표시.|
 |-c        | 파일 당 패턴이 일치하는 라인의 갯수 출력.|
 
+# grep 사용 예제
+
+`grep` 명령어를 사용하는 기본 방법은 아래와 같다.
+
+```
+grep [OPTION] [PATTERN] [FILE]
+```
+
+
+## 대상 파일 문자열 검색
+
+```
+grep "STR" [FILE.name]
+```
+
+**`grep` 명령에 문자열과 파일 이름을 지정**하여, **파일에서 문자열을 검색**할 수 있다. 
+
+**문자열 검색 결과는 문자열이 포함된 라인 단위로 출력**된다.
+
+<br>
+
+아래는 "GILLOG.txt" 파일에서 "gil"이라는 문자열을 검색하고, 문자열이 존재하는 라인을 출력하는 예제이다.
+
+_기본적으로 대소문자 구분_
+
+```
+$ cat GILLOG.txt
+"GILLOG" is a developer blog.
+
+The starting point was to record the facts that a man named gil learned by developing or studying his lazy habits.
+
+GILLOG, which began with the very childish idea of taking a log of itself.
+
+it is eventually the same place as development SNS for gil.
+
+$ grep "PAT" FILE.txt
+The starting point was to record the facts that a man named gil learned by developing or studying his lazy habits.
+
+it is eventually the same place as development SNS for gil.
+```
+
+## 현재 디렉토리 모든 파일에서 문자열 검색
+
+```
+grep "STR" *
+```
+
+파일 이름에 "*" 문자를 사용하여, 현재 디렉토리에 있는 모든 파일에서 문자열을 검색할 수 있습니다. 단, 현재 디렉토리에 포함된 하위 디렉토리에 있는 파일은 탐색하지 않습니다. (하위 디렉토리를 탐색하려면 -r 옵션 사용.)
+
+```
+$ ls
+FILE1.txt  FILE2.txt
+$ grep "PAT" *
+FILE1.txt:grep searches for PATTERNS in each FILE.
+FILE1.txt:PATTERNS is one or patterns separated by newline characters.
+FILE2.txt:grep searches for PATTERNS in each FILE.
+FILE2.txt:PATTERNS is one or patterns separated by newline characters.
+```
+
+
+## 특정 확장자를 가진 모든 파일에서 문자열 검색	
+
+```
+grep "STR" *.ext
+```
+
+파일 이름 확장자 앞에 "*" 문자를 사용하여, 특정 확장자를 가진 모든 파일에서 문자열을 검색할 수 있습니다.
+
+```
+$ ls
+A.c  A.h  B.c  B.h 
+$ grep "include" *.h
+A.h:#include <stdio.h>
+B.h:#include <string.h"
+```
+
+## 대소문자 구분하지 않고 문자열 검색	
+
+```
+grep -i "STR" [FILE]
+```
+
+grep 명령에 "-i" 옵션을 사용하여, 대소문자 구분없이 문자열을 검색할 수 있습니다.
+
+```
+$ cat FILE1.txt
+grep searches for PATTERNS in each FILE.
+PATTERNS is one or patterns separated by newline characters.
+And grep prints each line that matches a pattern.
+$ grep -i "Pat" FILE1.txt
+grep searches for PATTERNS in each FILE.
+PATTERNS is one or patterns separated by newline characters.
+And grep prints each line that matches a pattern.
+```
+
+## 매칭되는 PATTERN이 존재하지 않는 라인 선택	
+
+```
+grep -v "STR" [FILE]
+```
+
+어떤 경우에는, 문자열이 매칭되는 라인이 아닌, 매칭되는 패턴이 존재하지 않는 라인을 선택해야 하는 경우가 있습니다. 이 때, "-v" 옵션을 사용합니다.
+
+```
+$ cat FILE1.txt
+grep searches for PATTERNS in each FILE.
+PATTERNS is one or patterns separated by newline characters.
+And grep prints each line that matches a pattern.
+$ grep -v "PAT" FILE1.txt
+And grep prints each line that matches a pattern.
+```
+
+## 단어(Word) 단위로 문자열 검색	
+
+```
+grep -w "STR" [FILE]
+```
+
+"-w" 옵션을 사용하면, 단어(Word) 단위로 문자열을 검색할 수 있습니다.
+
+```
+$ cat FILE1.txt
+grep searches for PATTERNS in each FILE.
+PATTERNS is one or patterns separated by newline characters.
+And grep prints each line that matches a pattern.
+$ grep -w "PAT" FILE1.txt
+$ grep -w "PATTERNS" FILE1.txt
+grep searches for PATTERNS in each FILE.
+PATTERNS is one or patterns separated by newline characters.
+```
+
+
+## 검색된 문자열이 포함된 라인 번호 출력	
+
+```
+grep -n "STR" [FILE]
+```
+
+"-n" 옵션을 사용하여, 검색 결과가 포함된 라인 번호를 출력할 수 있습니다.
+
+```
+$ cat FILE1.txt
+grep searches for PATTERNS in each FILE.
+PATTERNS is one or patterns separated by newline characters.
+And grep prints each line that matches a pattern.
+$ grep -n "PAT" FILE1.txt
+1:grep searches for PATTERNS in each FILE.
+2:PATTERNS is one or patterns separated by newline characters.
+```
+
+## 하위 디렉토리를 포함한 모든 파일에서 문자열 검색	
+
+```
+grep -r "STR" *
+```
+
+"-r" 옵션을 사용하면, 하위 디렉토리를 포함한 모든 파일에서 문자열을 검색할 수 있습니다.
+
+```
+$ grep -r "PAT" *
+DIR_1/FILE1.txt:grep searches for PATTERNS in each FILE.
+DIR_1/FILE1.txt:PATTERNS is one or patterns separated by newline characters.
+FILE1.txt:grep searches for PATTERNS in each FILE.
+FILE1.txt:PATTERNS is one or patterns separated by newline characters.
+FILE2.txt:grep searches for PATTERNS in each FILE.
+FILE2.txt:PATTERNS is one or patterns separated by newline characters.
+```
+
+## 최대 검색 결과 갯수 제한	
+
+```
+grep -m 100 "STR" FILE
+```
+
+grep 명령의 결과가 너무 많이 표시될 때, "-m" 옵션을 사용하여 최대 표시 결과를 제한할 수 있습니다.
+
+```
+$ cat FILE1.txt
+grep searches for PATTERNS in each FILE.
+PATTERNS is one or patterns separated by newline characters.
+And grep prints each line that matches a pattern.
+$ grep -n "PAT" FILE1.txt
+1:grep searches for PATTERNS in each FILE.
+2:PATTERNS is one or patterns separated by newline characters.
+$ grep -m 1 "PAT" FILE1.txt
+grep searches for PATTERNS in each FILE.
+```
+
+
+
+## 검색 결과 앞에 파일 이름 표시	
+
+```
+grep -H "STR" *
+```
+
+"-H" 옵션을 사용하여 검색 결과 앞에 파일 이름을 표시할 수 있습니다.
+
+"-Hn" 옵션은 파일 이름과 함께 라인 번호도 표시한다.
+
+```
+$ grep -H "PAT" *
+FILE1.txt:grep searches for PATTERNS in each FILE.
+FILE1.txt:PATTERNS is one or patterns separated by newline characters.
+$ grep -Hn "PAT" *
+FILE1.txt:1:grep searches for PATTERNS in each FILE.
+FILE1.txt:2:PATTERNS is one or patterns separated by newline characters.
+```
+
+
+
+## 문자열 A로 시작하여 문자열 B로 끝나는 패턴 찾기	
+
+```
+grep "A.*B" *
+```
+
+정규 표현식에서 "."와 "*"를 조합하여 문자열 A로 시작하여 문자열 B로 끝나는 패턴을 찾을 수 있습니다.
+
+```
+$ cat FILE1.txt
+the first step  : edit text file.
+the second step : save the file.
+the third step  : copy to usb.
+$ grep -n "the.*step" FILE1.txt
+1:the first step  : edit text file.
+2:the second step : save the file.
+3:the third step  : copy to usb.
+$ cat FILE2.txt
+ABCDEFGHIJKLMNOPQRSTUVWXYZ
+BCD
+XYZ
+ABZ
+$ grep -n "A.*Z" FILE2.txt
+1:ABCDEFGHIJKLMNOPQRSTUVWXYZ
+4:ABZ
+```
+
+
+## 0-9 사이 숫자만 변경되는 패턴 찾기	
+
+```
+grep "STR[0-9]" *
+```
+
+정규 표현식 "[]"를 사용하여 0-9 사이 숫자만 변경되는 문자열 패턴을 검색할 수 있습니다.
+
+```
+$ cat FILE3.txt
+step0  : edit text file.
+step1  : save the file.
+step2  : copy to usb.
+$ grep -n step[0-9] FILE3.txt
+1:step0  : edit text file.
+2:step1  : save the file.
+3:step2  : copy to usb.
+```
+
+
+
+## 문자열 패턴 전체를 정규 표현식 메타 문자가 아닌 일반 문자로 검색하기	
+
+```
+grep -F "*[]?..." [FILE]
+```
+
+"-F" 옵션을 사용하면, 패턴에 지정된 문자열을 메타 문자로 인식하지 않고 일반 문자로 인식하여 패턴을 검색합니다.
+
+```
+$ cat FILE4.txt
+01234567890
+[0-9]
+12345
+$ grep -n "[0-9]" FILE4.txt
+1:01234567890
+2:[0-9]
+3:12345
+$ grep -Fn "[0-9]" FILE4.txt
+2:[0-9]
+```
+
+## 정규 표현식 메타 문자를 일반 문자로 검색하기	
+
+```
+grep "\*" [FILE]
+```
+
+문자열 패턴에서 정규 표현식 메타 문자 앞에 "\"(백슬래시)를 사용하면, 해당 문자를 일반 문자로 인식하게 만들 수 있습니다.
+
+```
+$ cat FILE5.txt
+* step 1
+1. sample text 1
+2. sample text 2
+$ grep "\*" FILE5.txt
+* step 1
+$ grep "." FILE5.txt
+* step 1
+1. sample text 1
+2. sample text 2
+$ grep "\." FILE5.txt
+1. sample text 1
+2. sample text 2
+```
+
+## 문자열 라인 처음 시작 패턴 검색하기	
+
+```
+grep "^STR" [FILE]
+```
+
+정규 표현식 "^"를 사용하여 문자열 라인의 중간이 아닌 시작 패턴만 검색할 수 있습니다.
+
+```
+$ cat FILE5.txt
+* step 1
+1. sample text 1
+2. sample text 2
+$ grep "^1" FILE5.txt
+1. sample text 1
+```
+
+## 문자열 라인 마지막 종료 패턴 검색하기	
+
+```
+grep "$STR" [FILE]
+```
+
+정규 표현식 "$"를 사용하여 문자열 라인의 처음 또는 중간이 아닌 종료 패턴을 검색할 수 있습니다.
+
+```
+$ cat FILE6.txt
+..............
+.............?
+ABCDEFGHIJKLM.
+$ grep "\.$" FILE6.txt
+..............
+ABCDEFGHIJKLM.
+$ grep -v "\.$" FILE6.txt
+.............?
+```
