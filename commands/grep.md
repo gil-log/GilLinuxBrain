@@ -63,6 +63,9 @@ grep [OPTION] [PATTERN] [FILE]
 ```
 
 
+<br>
+
+
 ## 대상 파일 문자열 검색
 
 ```
@@ -94,6 +97,9 @@ The starting point was to record the facts that a man named gil learned by devel
 
 it is eventually the same place as development SNS for gil.
 ```
+
+<br>
+
 
 ## 현재 디렉토리 모든 파일에서 문자열 검색
 
@@ -136,6 +142,9 @@ A.h:#include <stdio.h>
 B.h:#include <string.h"
 ```
 
+<br>
+
+
 ## 대소문자 구분하지 않고 문자열 검색	
 
 ```
@@ -155,6 +164,9 @@ PATTERNS is one or patterns separated by newline characters.
 And grep prints each line that matches a pattern.
 ```
 
+<br>
+
+
 ## 매칭되는 PATTERN이 존재하지 않는 라인 선택	
 
 ```
@@ -173,6 +185,9 @@ And grep prints each line that matches a pattern.
 $ grep -v "PAT" FILE1.txt
 And grep prints each line that matches a pattern.
 ```
+
+<br>
+
 
 ## 단어(Word) 단위로 문자열 검색	
 
@@ -194,6 +209,9 @@ PATTERNS is one or patterns separated by newline characters.
 ```
 
 
+<br>
+
+
 ## 검색된 문자열이 포함된 라인 번호 출력	
 
 ```
@@ -212,6 +230,9 @@ $ grep -n "PAT" FILE1.txt
 2:PATTERNS is one or patterns separated by newline characters.
 ```
 
+<br>
+
+
 ## 하위 디렉토리를 포함한 모든 파일에서 문자열 검색	
 
 ```
@@ -229,6 +250,9 @@ FILE1.txt:PATTERNS is one or patterns separated by newline characters.
 FILE2.txt:grep searches for PATTERNS in each FILE.
 FILE2.txt:PATTERNS is one or patterns separated by newline characters.
 ```
+
+<br>
+
 
 ## 최대 검색 결과 갯수 제한	
 
@@ -250,6 +274,9 @@ $ grep -m 1 "PAT" FILE1.txt
 grep searches for PATTERNS in each FILE.
 ```
 
+<br>
+
+
 
 
 ## 검색 결과 앞에 파일 이름 표시	
@@ -270,6 +297,9 @@ $ grep -Hn "PAT" *
 FILE1.txt:1:grep searches for PATTERNS in each FILE.
 FILE1.txt:2:PATTERNS is one or patterns separated by newline characters.
 ```
+
+
+<br>
 
 
 
@@ -300,6 +330,9 @@ $ grep -n "A.*Z" FILE2.txt
 4:ABZ
 ```
 
+<br>
+
+
 
 ## 0-9 사이 숫자만 변경되는 패턴 찾기	
 
@@ -322,6 +355,9 @@ $ grep -n step[0-9] FILE3.txt
 
 
 
+<br>
+
+
 ## 문자열 패턴 전체를 정규 표현식 메타 문자가 아닌 일반 문자로 검색하기	
 
 ```
@@ -342,6 +378,9 @@ $ grep -n "[0-9]" FILE4.txt
 $ grep -Fn "[0-9]" FILE4.txt
 2:[0-9]
 ```
+
+<br>
+
 
 ## 정규 표현식 메타 문자를 일반 문자로 검색하기	
 
@@ -367,6 +406,9 @@ $ grep "\." FILE5.txt
 2. sample text 2
 ```
 
+<br>
+
+
 ## 문자열 라인 처음 시작 패턴 검색하기	
 
 ```
@@ -383,6 +425,8 @@ $ cat FILE5.txt
 $ grep "^1" FILE5.txt
 1. sample text 1
 ```
+
+<br>
 
 ## 문자열 라인 마지막 종료 패턴 검색하기	
 
