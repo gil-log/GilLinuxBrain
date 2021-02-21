@@ -128,4 +128,3 @@ whereis test.php -> test.php 위치 출력
  ps aux | grep gil -> ps 결과에서 gil 문자열 라인 출력
 
 
-
