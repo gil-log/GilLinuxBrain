@@ -1,4 +1,5 @@
 
+
 # cd : 디렉토리 이동 명령어
 
 cd /user/local -> user아래 local로 이동
